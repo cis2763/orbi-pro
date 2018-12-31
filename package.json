@@ -1,5 +1,5 @@
 {
-  "name": "@erf23/orbi-pro",
+  "name": "orbi-pro",
   "version": "1.0.0",
   "description": "API to access the Orbi Pro web interface.",
   "main": "index.mjs",
