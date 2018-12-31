@@ -1,18 +1,35 @@
 {
-  "name": "orbi-pro",
-  "version": "0.0.1",
-  "description": "",
+  "name": "@erf23/orbi-pro",
+  "version": "1.0.0",
+  "description": "API to access the Orbi Pro web interface.",
   "main": "index.mjs",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --require @babel/register './test/**/*.mjs'"
   },
   "author": "Glenn Eguchi",
-  "license": "ISC",
+  "license": "MIT",
+  "engines": {
+    "node": ">=10.10.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/erf23/orbi-pro.git"
+  },
   "dependencies": {
     "events": "^3.0.0",
     "node": "^10.10.0",
     "npm": "^6.5.0",
     "request": "^2.88.0",
-    "request-promise": "^4.2.2"
+    "request-promise": "^4.2.2",
+    "request-promise-native": "^1.0.5"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.2.3",
+    "@babel/register": "^7.0.0",
+    "chai": "*",
+    "express": "^4.16.4",
+    "express-basic-auth": "^1.1.6",
+    "mocha": "*"
   }
 }

@@ -1,1 +1,1 @@
-exports.Client = require("./src/Client.mjs");
+module.exports = require("./src/Client.mjs");

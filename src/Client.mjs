@@ -1,30 +1,50 @@
 const EventEmitter = require("events");
-const fs = require("fs");
-const pages = require("./Pages.mjs");
+const Pages = require("./Pages.mjs");
 
 class Client extends EventEmitter {
   constructor(opt) {
     super();
-    this._basic = {};
+    this._basic = {status: "unknown"};
     this._devices = [];
-    this._pages = new Pages(opt);
+    const depends = opt.depends || {};
+    const pagesClass = depends.Pages || Pages;
+    
+    const pagesOpt = {};
+    if(opt.password) {
+      pagesOpt.password = opt.password;
+    }
+    if(opt.baseUrl) {
+      pagesOpt.baseUrl = opt.baseUrl;
+    }
+    this._pages = new pagesClass(pagesOpt);
+  }
+  
+  get status() {
+    return this._basic.status || "unknown";
+  }
+  
+  get devices() {
+    return this._devices;
   }
   
   refresh() {
     let result = {};
     return this._pages.changeUser().then(() => {
-      return basicHomeResult();
+      return this._pages.basicHomeResult();
     }).then((basicResult) => {
-      result._basic = basicResults;
-      return deviceInfo();
+      result.basic = basicResult;
+      return this._pages.deviceInfo();
     }).then((devices) => {
-      result._devices = devices;
+      result.devices = devices;
       return this._pages.logout();
     }).then(() => {
-      this._basic = basic;
-      this._devices = devices;
-      this.emit("refreshed");
-      return this;
+      this._basic = result.basic;
+      this._devices = result.devices;
+      setTimeout(() => {
+        this.emit("refreshed");
+      }, 0);
     });
   }
 }
+
+module.exports = Client;
