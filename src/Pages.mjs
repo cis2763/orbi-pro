@@ -34,10 +34,13 @@ class Pages {
   
   deviceInfo() {
     return this._httpGet("DEV_device_info.htm").then((body) => {
-      const BODY_REGEX = /^device_changed=[^\n]+\ndevice=(.*)$/m;
+      const BODY_REGEX = /^[\n\t ]*device_changed=[^\n]+\ndevice=(.*)[\n\t ]*$/m;
       const match = body.match(BODY_REGEX);
       if(!match) {
-        throw {code: "unexpected result from DEV_device_info.htm"};
+        throw {
+          code: "unexpected result from DEV_device_info.htm",
+          body
+        };
       }
       return JSON.parse(match[1]); // throws
     });
@@ -45,10 +48,13 @@ class Pages {
   
   basicHomeResult() {
     return this._httpGet("basic_home_result.txt").then((body) => {
-      const BODY_REGEX = /^([^;]+);([0-9]+);([0-9]+);[0-9]+;[0-9]+;[0-9]+;[0-9]+;[\n\t ]*$/m;
+      const BODY_REGEX = /^[\n\t ]*([^;]+);([0-9]+);([0-9]+);[0-9]+;[0-9]+;[0-9]+;[0-9]+;[\n\t ]*$/m;
       const match = body.match(BODY_REGEX);
       if(!match) {
-        throw {code: "unexpected result from basic_home_result.txt"};
+        throw {
+          code: "unexpected result from basic_home_result.txt",
+          body
+        };
       }
       
       const status = match[1];
